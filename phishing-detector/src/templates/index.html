@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Megadriod PhishGuard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --primary: #0b023b;
+            --danger: #c0392b;
+            --success: #27ae60;
+            --bg: #f4f6fa;
+            --card: #fff;
+            --border: #e0e0e0;
+            --dark: #181c20;
+        }
+        body {
+            background: var(--bg);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #222;
+        }
+        header {
+            background: var(--primary);
+            color: #fff;
+            padding: 0;
+            margin: 0;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px 24px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .logo svg {
+            height: 36px;
+            width: 36px;
+            margin-right: 10px;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 24px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #ffeb3b;
+        }
+        .hero {
+            background: linear-gradient(90deg, var(--primary) 60%, #007bff 100%);
+            color: #fff;
+            padding: 48px 0 32px 0;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 18px auto;
+        }
+        .services {
+            max-width: 1100px;
+            margin: 40px auto 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+        }
+        .service-card {
+            background: var(--card);
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0001;
+            padding: 28px 22px;
+            flex: 1 1 260px;
+            min-width: 260px;
+            max-width: 340px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .service-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px #0001;
+            padding: 32px 24px 24px 24px;
+        }
+        h2 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #555;
+            margin-bottom: 24px;
+        }
+        label {
+            font-weight: 600;
+            margin-top: 12px;
+            display: block;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px 0;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #020a33;
+        }
+        .result, .history {
+            margin-top: 24px;
+            padding: 18px;
+            border-radius: 8px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+        }
+        .phishing { color: var(--danger); font-weight: bold; }
+        .legit { color: var(--success); font-weight: bold; }
+        .loading { color: #888; }
+        .copy-btn {
+            background: #eee;
+            color: #333;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        .copy-btn:hover { background: #ddd; }
+        .history-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .history-list li {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        /* Testimonials */
+        .testimonials {
+            max-width: 900px;
+            margin: 60px auto 0 auto;
+            padding: 32px 0;
+            background: #f4f6fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0001;
+        }
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .testimonial-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+        }
+        .testimonial {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #0001;
+            padding: 18px 16px;
+            max-width: 320px;
+            min-width: 220px;
+            border: 1px solid #e0e0e0;
+        }
+        .testimonial .author {
+            margin-top: 12px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        /* Blog */
+        .blog {
+            max-width: 900px;
+            margin: 60px auto 0 auto;
+            padding: 32px 0;
+        }
+        .blog h2 {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .blog-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+        }
+        .blog-post {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #0001;
+            padding: 18px 16px;
+            max-width: 320px;
+            min-width: 220px;
+            border: 1px solid #e0e0e0;
+        }
+        .blog-post h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+        .blog-post .date {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        /* Contact */
+        .contact {
+            max-width: 700px;
+            margin: 60px auto 40px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0001;
+            padding: 32px 24px;
+        }
+        .contact h2 {
+            margin-bottom: 16px;
+        }
+        .contact-info {
+            font-size: 1.1em;
+            margin-bottom: 12px;
+        }
+        .contact-info b {
+            color: var(--primary);
+        }
+        @media (max-width: 900px) {
+            .services, .testimonial-list, .blog-list { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 600px) {
+            .container, .nav, .services, .testimonials, .blog, .contact { padding: 12px; }
+            .hero h1 { font-size: 1.3rem; }
+            .service-card, .testimonial, .blog-post { min-width: 90vw; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="nav">
+        <div class="logo">
+            <!-- Replace SVG with your logo image if you have one -->
+            <svg viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="22" stroke="#fff" stroke-width="4" fill="#0056b3"/>
+                <path d="M16 32L24 16L32 32" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            Megadriod PhishGuard
+        </div>
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#phishguard">PhishGuard Tool</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#blog">Blog</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+</header>
+<section class="hero">
+    <h1>Welcome to Megadriod PhishGuard</h1>
+    <p>
+        At Megadriod Cybersecurity, we provide effective security solutions to protect businesses from digital threats, leveraging technology and experience.
+    </p>
+</section>
+<section id="services" class="services">
+    <div class="service-card">
+        <h3>Phishing Detection</h3>
+        <p>Detect phishing URLs in real-time using advanced rule-based and AI-powered analysis.</p>
+    </div>
+    <div class="service-card">
+        <h3>Link Analysis</h3>
+        <p>Analyze all links on a web page for suspicious patterns, risky domains, and unsafe content.</p>
+    </div>
+    <div class="service-card">
+        <h3>Threat Intelligence</h3>
+        <p>Integrate with threat intelligence feeds to block known malicious sites and emerging threats.</p>
+    </div>
+    <div class="service-card">
+        <h3>Security Consulting</h3>
+        <p>Get expert advice and solutions tailored to your business to strengthen your cyber defenses.</p>
+    </div>
+</section>
+<div id="phishguard" class="container">
+    <h2>PhishGuard Tool</h2>
+    <div class="subtitle">Check URLs for phishing and analyze links in web pages. All processing is done securely on your server.</div>
+    <form id="phishingForm" autocomplete="off">
+        <label for="urlInput">Check a URL for phishing:</label>
+        <input type="url" id="urlInput" placeholder="https://example.com" required>
+        <button type="submit">Check URL</button>
+    </form>
+    <div id="phishingResult" class="result" style="display:none;"></div>
+    <form id="linkForm" autocomplete="off">
+        <label for="analyzeUrl">Analyze links from a URL:</label>
+        <input type="url" id="analyzeUrl" placeholder="https://example.com">
+        <label for="analyzeHtml">Or paste HTML content:</label>
+        <textarea id="analyzeHtml" rows="4" placeholder="Paste HTML here"></textarea>
+        <button type="submit">Analyze Links</button>
+    </form>
+    <div id="linkResult" class="result" style="display:none;"></div>
+    <div class="history" id="historyBox" style="display:none;">
+        <b>Results History</b>
+        <button id="exportBtn" style="float:right;">Export</button>
+        <ul class="history-list" id="historyList"></ul>
+    </div>
+</div>
+<section id="testimonials" class="testimonials">
+    <h2>What Our Clients Say</h2>
+    <div class="testimonial-list">
+        <div class="testimonial">
+            <div>"Megadriod PhishGuard helped us stop phishing attacks before they reached our employees. Highly recommended!"</div>
+            <div class="author">— Jane Doe, IT Manager</div>
+        </div>
+        <div class="testimonial">
+            <div>"Their cybersecurity consulting gave us peace of mind and a clear action plan."</div>
+            <div class="author">— John Smith, CEO</div>
+        </div>
+        <div class="testimonial">
+            <div>"The link analysis tool is fast, accurate, and easy to use."</div>
+            <div class="author">— Sarah Lee, Security Analyst</div>
+        </div>
+    </div>
+</section>
+<section id="blog" class="blog">
+    <h2>Latest Blog Posts</h2>
+    <div class="blog-list">
+        <div class="blog-post">
+            <h3>How to Recognize Phishing Emails</h3>
+            <div class="date">May 2025</div>
+            <div>Learn the signs of phishing emails and how to protect your business from social engineering attacks.</div>
+        </div>
+        <div class="blog-post">
+            <h3>Why Threat Intelligence Matters</h3>
+            <div class="date">April 2025</div>
+            <div>Discover how integrating threat intelligence can help you stay ahead of cybercriminals.</div>
+        </div>
+        <div class="blog-post">
+            <h3>Cybersecurity Best Practices for Small Businesses</h3>
+            <div class="date">March 2025</div>
+            <div>Essential tips for small businesses to build a strong cybersecurity foundation.</div>
+        </div>
+    </div>
+</section>
+<section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-info">
+        <b>Email:</b> <a href="mailto:megadriodcyber@gmail.com">megadriodcyber@gmail.com</a>
+    </div>
+    <div class="contact-info">
+        <b>Phone:</b> +234 9019067253
+    </div>
+    <div class="contact-info">
+        <b>WhatsApp:</b> <a href="https://wa.me/2348134422262" target="_blank">Chat on WhatsApp</a>
+    </div>
+    <div class="contact-info">
+        <b>Website:</b> <a href="https://megadriodcyber.wordpress.com" target="_blank">megadriodcyber.wordpress.com</a>
+    </div>
+    <div class="contact-info">
+        <b>Location:</b> UK, USA, UAE and Canada
+    </div>
+</section>
+<footer style="text-align:center;padding:24px 0;color:#888;">
+    &copy; 2025 Megadriod Cybersecurity. All rights reserved.
+</footer>
+<script>
+function escapeHTML(str) {
+    return String(str).replace(/[&<>"']/g, function(m) {
+        return ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[m];
+    });
+}
+
+function addToHistory(type, input, result) {
+    let history = JSON.parse(localStorage.getItem('phishHistory') || '[]');
+    history.unshift({ type, input, result, time: new Date().toLocaleString() });
+    if (history.length > 10) history = history.slice(0, 10);
+    localStorage.setItem('phishHistory', JSON.stringify(history));
+    renderHistory();
+}
+
+function renderHistory() {
+    let history = JSON.parse(localStorage.getItem('phishHistory') || '[]');
+    const box = document.getElementById('historyBox');
+    const list = document.getElementById('historyList');
+    if (history.length === 0) {
+        box.style.display = 'none';
+        return;
+    }
+    box.style.display = 'block';
+    list.innerHTML = '';
+    history.forEach(item => {
+        let html = `<li>
+            <b>${escapeHTML(item.type)}</b> at ${escapeHTML(item.time)}<br>
+            <span style="font-size:0.95em;">Input: ${escapeHTML(item.input)}</span><br>
+            <span style="font-size:0.95em;">Result: ${escapeHTML(item.result)}</span>
+            <button class="copy-btn" onclick="navigator.clipboard.writeText('${escapeHTML(item.result)}')">Copy</button>
+        </li>`;
+        list.innerHTML += html;
+    });
+}
+
+document.getElementById('phishingForm').onsubmit = function(event) {
+    event.preventDefault();
+    const url = document.getElementById('urlInput').value.trim();
+    const resultDiv = document.getElementById('phishingResult');
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = "<span class='loading'>Checking...</span>";
+    fetch('/api/phishing-check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            resultDiv.innerHTML = `<span class="phishing">${escapeHTML(data.error)}</span>`;
+            addToHistory('Phishing Check', url, data.error);
+        } else {
+            const status = data.is_phishing ? 'Phishing ⚠️' : 'Legitimate ✅';
+            resultDiv.innerHTML =
+                `<b>URL:</b> ${escapeHTML(data.url)}<br>
+                 <b>Status:</b> <span class="${data.is_phishing ? 'phishing' : 'legit'}">${status}</span>`;
+            addToHistory('Phishing Check', url, status);
+        }
+    })
+    .catch(err => {
+        resultDiv.innerHTML = `<span class="phishing">Error: ${escapeHTML(err.toString())}</span>`;
+        addToHistory('Phishing Check', url, err.toString());
+    });
+};
+
+document.getElementById('linkForm').onsubmit = function(event) {
+    event.preventDefault();
+    const url = document.getElementById('analyzeUrl').value.trim();
+    const html = document.getElementById('analyzeHtml').value.trim();
+    const resultDiv = document.getElementById('linkResult');
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = "<span class='loading'>Analyzing...</span>";
+    fetch('/api/link-analysis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url, html: html })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            resultDiv.innerHTML = `<span class="phishing">${escapeHTML(data.error)}</span>`;
+            addToHistory('Link Analysis', url || '[HTML]', data.error);
+        } else {
+            let htmlResult = "<b>Links found:</b><ul>";
+            data.results.forEach(link => {
+                htmlResult += `<li>
+                    <b>${escapeHTML(link.url)}</b><br>
+                    Safe: <span class="${link.is_safe ? 'legit' : 'phishing'}">${link.is_safe ? 'Yes' : 'No'}</span><br>
+                    Reasons: <ul>${link.reasons.map(r => `<li>${escapeHTML(r)}</li>`).join('')}</ul>
+                </li>`;
+            });
+            htmlResult += "</ul>";
+            resultDiv.innerHTML = htmlResult;
+            addToHistory('Link Analysis', url || '[HTML]', `${data.results.length} links analyzed`);
+        }
+    })
+    .catch(err => {
+        resultDiv.innerHTML = `<span class="phishing">Error: ${escapeHTML(err.toString())}</span>`;
+        addToHistory('Link Analysis', url || '[HTML]', err.toString());
+    });
+};
+
+document.getElementById('exportBtn').onclick = function() {
+    const history = JSON.parse(localStorage.getItem('phishHistory') || '[]');
+    if (history.length === 0) return;
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Type,Input,Result,Time\n";
+    history.forEach(item => {
+        const row = `${escapeHTML(item.type)},${escapeHTML(item.input)},${escapeHTML(item.result)},${escapeHTML(item.time)}`;
+        csvContent += row + "\n";
+    });
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "phishing_history.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
+renderHistory();
+</script>
+</body>
+</html>
